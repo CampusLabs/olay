@@ -9,8 +9,7 @@
   },
   "devDependencies": {
     "chai": "x",
-    "mocha": "x",
-    "underscore": "x"
+    "mocha": "x"
   },
   "engines": {
     "node": "x",

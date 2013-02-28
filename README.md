@@ -1,8 +1,6 @@
 # Olay
 
-**O**ver**lay**s that don't suck!
-
-[Demo](http://htmlpreview.github.com/?https://github.com/orgsync/olay/blob/master/index.html) | [Tests](http://htmlpreview.github.com/?https://github.com/orgsync/olay/blob/master/test/index.html)
+**O**ver **lay**s that don't suck!
 
 ## Install
 
@@ -22,12 +20,22 @@ npm install olay
 
 ## Use
 
-```js
+Coming soon...
+
+## Clone
 
 ```
+git clone git@github.com:orgsync/olay
+npm install
+```
 
+### Demo
 
-## Test
+```
+open index.html
+```
+
+### Test
 
 ```bash
 open test/index.html
