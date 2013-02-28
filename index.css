@@ -1,0 +1,30 @@
+.js-olay-container {
+  position: fixed;
+  z-index: 999999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.js-olay-container.js-show {
+  display: block;
+}
+
+.js-olay-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.js-olay-cell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.js-olay-content {
+  display: inline-block;
+  position: relative;
+}

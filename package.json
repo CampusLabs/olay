@@ -1,0 +1,19 @@
+{
+  "name": "olay",
+  "version": "0.0.1",
+  "author": "Casey Foster <c@sey.me>",
+  "licence": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orgsync/olay"
+  },
+  "devDependencies": {
+    "chai": "x",
+    "mocha": "x",
+    "underscore": "x"
+  },
+  "engines": {
+    "node": "x",
+    "npm": "x"
+  }
+}

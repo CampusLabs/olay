@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Olay Demo</title>
+    <link rel='stylesheet' href='index.css'>
+    <script src='test/jquery.js'></script>
+    <script src='https://raw.github.com/documentcloud/underscore/master/underscore.js'></script>
+    <script src='index.js'></script>
+    <style>
+      .js-olay-cell {
+        padding: 25px;
+      }
+
+      .js-fade .js-olay-cell {
+        -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
+        -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
+      }
+
+      .js-fade.js-show .js-olay-cell {
+        background-color: rgba(0, 0, 0, .5);
+      }
+
+      .js-olay-content {
+        padding: 100px;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+        border-radius: 3px;
+      }
+
+      .js-fade .js-olay-content {
+        opacity: 0;
+        -webkit-transform: scale(.95);
+        -moz-transform: scale(.95);
+        -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
+        -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
+      }
+
+      .js-fade.js-show .js-olay-content {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+      }
+    </style>
+    <script>
+    (function () {
+      var $ = window.jQuery;
+
+      $(function () {
+        var olay = new Olay('Press ESC, RETURN, or SPACE to close');
+        $('strong').click(function () {
+          olay.show();
+        });
+      });
+    })();
+    </script>
+  </head>
+
+  <body><strong>Launch Olay</strong></body>
+
+</html>
