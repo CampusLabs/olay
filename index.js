@@ -9,7 +9,7 @@
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
     var olay = $olay.data('olay');
-    if (!olay || !_.contains(olay.hideKeys, ev.which)) return;
+    if (!olay || !_.contains(olay.hideOnKeys, ev.which)) return;
     olay.hide();
     return false;
   });
@@ -54,14 +54,10 @@
     transitionDuration: 250,
 
     // What keys hide the olay? Default escape, enter, and space.
-    hideKeys: [27, 13, 32],
+    hideOnKeys: [27, 13, 32],
 
-    // Preserve the DOM data and events for this olay. If this is set to `true`,
-    // be sure to either set it to `false` before your final `hide` call, or
-    // after your final `hide` call invoke `destroy()` after your transition.
-    // Failure to do this will cause memory leaks. When `preserve` is set to
-    // `false` this is handled automaticaly.
-    preserve: false,
+    // Should the olay be hidden when there is a click outside the content box?
+    hideOnClick: true,
 
     // Callbacks for `show` and `hide`.
     onShow: function () {},
@@ -79,6 +75,10 @@
       // not desirable in a transition...
       this.$container.data('olay', this).height();
       this.$container.addClass('js-show').height();
+      if (this.hideOnClick) {
+        this.$container.click(_.bind(this.hide, this));
+        this.$content.click(function (ev) { ev.stopPropagation(); });
+      }
       if (this.duration) {
         var duration = this.transitionDuration + this.duration;
         this.interval = _.delay(_.bind(this.hide, this), duration);
@@ -99,12 +99,6 @@
       return this;
     },
 
-    // Completely remove the `$container` element and its children and all of
-    // the associated data and events.
-    destroy: function () {
-      this.$container.remove();
-    },
-
     // Append `$container` to the DOM. Used internally.
     _append: function () {
       var $body = $('body');
@@ -117,7 +111,7 @@
     // Detach or remove `$container` from the DOM. Used internally.
     _remove: function () {
       var last = $('.js-olay-container').length === 1;
-      this.preserve ? this.$container.detach() : this.destroy();
+      this.$container.remove();
       if (last) $('body').attr('style', this._bodyStyle);
       this._bodyStyle = void 0;
       this.onHide.call(this);
