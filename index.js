@@ -53,8 +53,8 @@
     // `0` means instantly.
     transitionDuration: 250,
 
-    // What keys hide the olay? Default escape, enter, and space.
-    hideOnKeys: [27, 13, 32],
+    // What keys hide the olay? Default is just ESC.
+    hideOnKeys: [27],
 
     // Should the olay be hidden when there is a click outside the content box?
     hideOnClick: true,
