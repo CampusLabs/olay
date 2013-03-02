@@ -19,7 +19,7 @@
   // ```js
   // var olay = new Olay('Howdy!', {duration: 5000});
   // ```js
-  var Olay = window.Olay = function (html, options) {
+  var Olay = window.Olay = function (el, options) {
     (this.$container = $('<div>')
       .addClass('js-olay-container')
       .addClass(this.transition)
@@ -30,7 +30,7 @@
           .append(this.$content = $('<div>')
             .addClass('js-olay-content')
             .attr('role', 'alertdialog')
-            .append(html)
+            .append(this.$el = el instanceof $ ? el : $(el))
           )
         )
       )
@@ -59,10 +59,6 @@
     // Should the olay be hidden when there is a click outside the content box?
     hideOnClick: true,
 
-    // Callbacks for `show` and `hide`.
-    onShow: function () {},
-    onHide: function () {},
-
     // Show the olay.
     show: function () {
       var inDom = this._bodyStyle !== void 0;
@@ -79,11 +75,11 @@
         this.$container.click(_.bind(this.hide, this));
         this.$content.click(function (ev) { ev.stopPropagation(); });
       }
-      if (this.duration) {
-        var duration = this.transitionDuration + this.duration;
-        this.timeout = _.delay(_.bind(this.hide, this), duration);
-      }
-      _.delay(_.bind(this.onShow, this), this.transitionDuration);
+      this.$el.trigger('show');
+      var duration = this.duration;
+      if (!duration) return this;
+      duration += this.transitionDuration;
+      this.timeout = _.delay(_.bind(this.hide, this), duration);
       return this;
     },
 
@@ -93,6 +89,7 @@
       if (!this.$container.hasClass('js-show')) return;
       clearTimeout(this.timeout);
       this.$container.removeClass('js-show').height();
+      this.$el.trigger('hide');
       var duration = this.transitionDuration;
       if (!duration) return this._remove();
       this.timeout = _.delay(_.bind(this._remove, this), duration);
@@ -102,9 +99,9 @@
     // Append `$container` to the DOM. Used internally.
     _append: function () {
       var $body = $('body');
-      $body.append(this.$container);
       this._bodyStyle = $body.attr('style') || null;
       $body.css('overflow', 'hidden').find(':focus').blur();
+      $body.append(this.$container);
       return this;
     },
 
@@ -114,7 +111,6 @@
       this.$container.remove();
       if (last) $('body').attr('style', this._bodyStyle);
       this._bodyStyle = void 0;
-      this.onHide.call(this);
       return this;
     }
   });
