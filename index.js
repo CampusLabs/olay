@@ -67,7 +67,7 @@
     show: function () {
       var inDom = this._bodyStyle !== void 0;
       if (inDom && this.$container.hasClass('js-show')) return this;
-      clearTimeout(this.interval);
+      clearTimeout(this.timeout);
       if (!inDom) this._append();
 
       // Force a redraw before and after adding the transition class. Not doing
@@ -81,7 +81,7 @@
       }
       if (this.duration) {
         var duration = this.transitionDuration + this.duration;
-        this.interval = _.delay(_.bind(this.hide, this), duration);
+        this.timeout = _.delay(_.bind(this.hide, this), duration);
       }
       _.delay(_.bind(this.onShow, this), this.transitionDuration);
       return this;
@@ -91,11 +91,11 @@
     // finally removing it from the DOM after `transitionDuration`.
     hide: function () {
       if (!this.$container.hasClass('js-show')) return;
-      clearTimeout(this.interval);
+      clearTimeout(this.timeout);
       this.$container.removeClass('js-show').height();
       var duration = this.transitionDuration;
       if (!duration) return this._remove();
-      this.interval = _.delay(_.bind(this._remove, this), duration);
+      this.timeout = _.delay(_.bind(this._remove, this), duration);
       return this;
     },
 
