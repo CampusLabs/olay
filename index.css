@@ -6,9 +6,10 @@
   width: 100%;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.js-olay-background {
+.js-olay-table {
   display: table;
   width: 100%;
   height: 100%;
@@ -27,26 +28,26 @@
 
 /* Built-in Transitions */
 
-.js-olay-scale-up .js-olay-background,
-.js-olay-scale-down .js-olay-background,
-.js-olay-flip .js-olay-background,
-.js-olay-slide .js-olay-background {
+.js-olay-scale-up.js-olay-container,
+.js-olay-scale-down.js-olay-container,
+.js-olay-flip.js-olay-container,
+.js-olay-slide.js-olay-container {
   opacity: 0;
   -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   transition: all .25s cubic-bezier(.5, 0, .5, 1);
 }
 
-.js-olay-flip .js-olay-background {
+.js-olay-flip.js-olay-container {
   -webkit-perspective: 500px;
   -moz-perspective: 500px;
   perspective: 500px;
 }
 
-.js-olay-scale-up.js-olay-show .js-olay-background,
-.js-olay-scale-down.js-olay-show .js-olay-background,
-.js-olay-flip.js-olay-show .js-olay-background,
-.js-olay-slide.js-olay-show .js-olay-background {
+.js-olay-scale-up.js-olay-show.js-olay-container,
+.js-olay-scale-down.js-olay-show.js-olay-container,
+.js-olay-flip.js-olay-show.js-olay-container,
+.js-olay-slide.js-olay-show.js-olay-container {
   opacity: 1;
 }
 

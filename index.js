@@ -25,8 +25,8 @@
       .addClass('js-olay-container')
       .addClass(this.transition)
       .append(
-    this.$background = $('<div>')
-      .addClass('js-olay-background')
+    this.$table = $('<div>')
+      .addClass('js-olay-table')
       .append(
     this.$cell = $('<div>')
       .addClass('js-olay-cell')

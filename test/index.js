@@ -24,9 +24,9 @@
       olay.$container.should.be.instanceOf($);
     });
 
-    it('should create a jQuery $background element', function () {
-      olay.should.have.property('$background');
-      olay.$background.should.be.instanceOf($);
+    it('should create a jQuery $table element', function () {
+      olay.should.have.property('$table');
+      olay.$table.should.be.instanceOf($);
     });
 
     it('should create a jQuery $cell element', function () {
