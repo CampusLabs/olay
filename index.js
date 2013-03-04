@@ -34,7 +34,6 @@
     this.$content = $('<div>')
       .addClass('js-olay-content')
       .attr('role', 'alertdialog')
-      .on('click', '.js-olay-hide', _.bind(this.hide, this))
       .append(
     this.$el = el instanceof $ ? el : $(el)
     ))));
@@ -74,6 +73,7 @@
       // not desirable in a transition...
       this.$container.data('olay', this).height();
       this.$container.addClass('js-olay-show').height();
+      this.$content.on('click', '.js-olay-hide', _.bind(this.hide, this));
       if (this.hideOnClick) {
         this.$container.click(_.bind(this.hide, this));
         this.$content.click(function (ev) { ev.stopPropagation(); });

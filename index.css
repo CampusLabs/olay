@@ -29,7 +29,8 @@
 
 .js-olay-scale-up .js-olay-background,
 .js-olay-scale-down .js-olay-background,
-.js-olay-flip .js-olay-background {
+.js-olay-flip .js-olay-background,
+.js-olay-slide .js-olay-background {
   opacity: 0;
   -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
@@ -37,20 +38,22 @@
 }
 
 .js-olay-flip .js-olay-background {
-  -webkit-perspective: 500;
-  -moz-perspective: 500;
-  perspective: 500;
+  -webkit-perspective: 500px;
+  -moz-perspective: 500px;
+  perspective: 500px;
 }
 
 .js-olay-scale-up.js-olay-show .js-olay-background,
 .js-olay-scale-down.js-olay-show .js-olay-background,
-.js-olay-flip.js-olay-show .js-olay-background {
+.js-olay-flip.js-olay-show .js-olay-background,
+.js-olay-slide.js-olay-show .js-olay-background {
   opacity: 1;
 }
 
 .js-olay-scale-up .js-olay-content,
 .js-olay-scale-down .js-olay-content,
-.js-olay-flip .js-olay-content {
+.js-olay-flip .js-olay-content,
+.js-olay-slide .js-olay-content {
   -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   transition: all .25s cubic-bezier(.5, 0, .5, 1);
@@ -85,4 +88,16 @@
   -webkit-transform: rotateX(0);
   -moz-transform: rotateX(0);
   transform: rotateX(0);
+}
+
+.js-olay-slide .js-olay-content {
+  -webkit-transform: translate(0, -100%);
+  -moz-transform: translate(0, -100%);
+  transform: translate(0, -100%);
+}
+
+.js-olay-slide.js-olay-show .js-olay-content {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  transform: translate(0, 0);
 }

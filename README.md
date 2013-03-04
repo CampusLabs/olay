@@ -2,6 +2,8 @@
 
 **O**ver **lay**s that don't suck!
 
+[Demo](http://orgsync.github.com/olay) | [Tests](http://orgsync.github.com/olay/test)
+
 ## Install
 
 ```html
