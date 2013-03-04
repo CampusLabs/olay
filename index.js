@@ -20,22 +20,24 @@
   // var olay = new Olay('Howdy!', {duration: 5000});
   // ```js
   var Olay = window.Olay = function (el, options) {
-    (this.$container = $('<div>')
+    _.extend(this, options);
+    this.$container = $('<div>')
       .addClass('js-olay-container')
       .addClass(this.transition)
-      .append(this.$table = $('<div>')
-        .addClass('js-olay-table')
-        .append(this.$cell = $('<div>')
-          .addClass('js-olay-cell')
-          .append(this.$content = $('<div>')
-            .addClass('js-olay-content')
-            .attr('role', 'alertdialog')
-            .append(this.$el = el instanceof $ ? el : $(el))
-          )
-        )
-      )
-    );
-    _.extend(this, options);
+      .append(
+    this.$background = $('<div>')
+      .addClass('js-olay-background')
+      .append(
+    this.$cell = $('<div>')
+      .addClass('js-olay-cell')
+      .append(
+    this.$content = $('<div>')
+      .addClass('js-olay-content')
+      .attr('role', 'alertdialog')
+      .on('click', '.js-olay-hide', _.bind(this.hide, this))
+      .append(
+    this.$el = el instanceof $ ? el : $(el)
+    ))));
   };
 
   // Define `prototype` properties and methods for `Olay`.
@@ -46,8 +48,9 @@
     duration: 0,
 
     // What transition should be used? This simply refers to a class that will
-    // be added to the `$container` when shown.
-    transition: 'js-fade',
+    // be added to the `$container` when shown. Use this to style different
+    // transitions with CSS.
+    transition: 'js-olay-scale-up',
 
     // How long should the olay take to transition in or out?
     // `0` means instantly.
@@ -62,7 +65,7 @@
     // Show the olay.
     show: function () {
       var inDom = this._bodyStyle !== void 0;
-      if (inDom && this.$container.hasClass('js-show')) return this;
+      if (inDom && this.$container.hasClass('js-olay-show')) return this;
       clearTimeout(this.timeout);
       if (!inDom) this._append();
 
@@ -70,7 +73,7 @@
       // this will apply the end result of the transition instantly, which is
       // not desirable in a transition...
       this.$container.data('olay', this).height();
-      this.$container.addClass('js-show').height();
+      this.$container.addClass('js-olay-show').height();
       if (this.hideOnClick) {
         this.$container.click(_.bind(this.hide, this));
         this.$content.click(function (ev) { ev.stopPropagation(); });
@@ -86,9 +89,9 @@
     // Hide the olay by removing the `'js-show'` class to the container and then
     // finally removing it from the DOM after `transitionDuration`.
     hide: function () {
-      if (!this.$container.hasClass('js-show')) return;
+      if (!this.$container.hasClass('js-olay-show')) return;
       clearTimeout(this.timeout);
-      this.$container.removeClass('js-show').height();
+      this.$container.removeClass('js-olay-show').height();
       this.$el.trigger('hide');
       var duration = this.transitionDuration;
       if (!duration) return this._remove();
