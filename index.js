@@ -35,8 +35,7 @@
       .addClass('js-olay-content')
       .attr('role', 'alertdialog')
       .append(
-    this.$el = el instanceof $ ? el : $(el)
-    ))));
+    this.$el = el instanceof $ ? el : $(el)))));
   };
 
   // Define `prototype` properties and methods for `Olay`.
@@ -103,6 +102,12 @@
     _append: function () {
       var $body = $('body');
       this._bodyStyle = $body.attr('style') || null;
+      $(':input').each(function () {
+        var $t = $(this);
+        if ('olayTabindex' in $t.data()) return;
+        $t.data('olayTabindex', $t.attr('tabindex') || null)
+          .attr('tabindex', -1);
+      });
       $body.css('overflow', 'hidden').find(':focus').blur();
       $body.append(this.$container);
       return this;
@@ -110,9 +115,15 @@
 
     // Detach or remove `$container` from the DOM. Used internally.
     _remove: function () {
-      var last = $('.js-olay-container').length === 1;
+      var $olays = $('.js-olay-container');
+      var length = $olays.length;
       this.$container.remove();
-      if (last) $('body').attr('style', this._bodyStyle);
+      var $unTabindex = $olays.eq(length - 2);
+      if (length === 1) $unTabindex = $('body').attr('style', this._bodyStyle);
+      $unTabindex.find(':input').each(function () {
+        var $t = $(this);
+        $t.attr('tabindex', $t.data('olayTabindex')).removeData('olayTabindex');
+      });
       this._bodyStyle = void 0;
       return this;
     }

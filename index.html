@@ -31,22 +31,46 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
         border-radius: 3px;
       }
+
+      .js-olay-hide {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .js-closer {
+        margin-top: 10px;
+      }
+
+      .js-olayception {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #000066;
+      }
     </style>
     <script>
       (function () {
         var $ = window.jQuery;
         var _ = window._;
 
-        var html = "<div>Press ESC to close, or click " +
-          "<span class='js-olay-hide'>HERE</span>.</div>'";
+        var $closer;
+        var $olayception;
+
+        var newOlay = function () {
+          var $el = $('<div>')
+            .append($('.js-new-olay').last().clone()
+              .append($olayception.clone()))
+            .append($closer.clone());
+          $el.find('.js-show-olay').on('click', newOlay);
+          (new Olay($el, {
+            transition: $('.js-transition').last().val(),
+            duration: +$('.js-duration').last().val()
+          })).show();
+        };
 
         $(function () {
-          $('.js-show-olay').click(function () {
-            (new Olay(html, {
-              transition: $('.js-transition').val(),
-              duration: +$('.js-duration').val()
-            })).show();
-          });
+          $olayception = $('.js-olayception').remove();
+          $closer = $('.js-closer').remove();
+          $('.js-show-olay').on('click', newOlay);
         });
       })();
     </script>
@@ -54,14 +78,20 @@
 
   <body>
     <h1>Olay Demo</h1>
-    <select class='js-transition'>
-      <option value='js-olay-scale-up'>Scale Up</option>
-      <option value='js-olay-scale-down'>Scale Down</option>
-      <option value='js-olay-flip'>Flip</option>
-      <option value='js-olay-slide'>Slide</option>
-    </select>
-    <input class='js-duration' placeholder='Duration (ms)'>
-    <button class='js-show-olay'>Show</button>
+    <div class='js-new-olay'>
+      <select class='js-transition'>
+        <option value='js-olay-scale-up'>Scale Up</option>
+        <option value='js-olay-scale-down'>Scale Down</option>
+        <option value='js-olay-flip'>Flip</option>
+        <option value='js-olay-slide'>Slide</option>
+      </select>
+      <input class='js-duration' placeholder='Duration (ms)'>
+      <button class='js-show-olay'>Show</button>
+    </div>
+    <div class='js-olayception'>OLAYCEPTION</div>
+    <div class='js-closer'>
+      To close, press ESC or click <span class='js-olay-hide'>HERE</span>.
+    </div>
   </body>
 
 </html>

@@ -107,5 +107,23 @@
     });
   });
 
+  describe('Tabindex', function () {
+    var $input = $('<input>')
+      .addClass('js-test-input')
+      .attr('tabindex', 1)
+      .appendTo('body');
+
+    it('should be locked when an olay is shown', function () {
+      olay.show();
+      $input.attr('tabindex').should.equal('-1');
+    });
+
+    it('should be restored when an olay is hidden', function () {
+      olay.hide();
+      $input.attr('tabindex').should.equal('1');
+      $input.remove();
+    });
+  });
+
   mocha.run();
 })();
