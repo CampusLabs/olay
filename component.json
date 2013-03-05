@@ -1,0 +1,8 @@
+{
+  "name": "olay",
+  "version": "0.1.0",
+  "main": ["./index.js", "./index.css"],
+  "dependencies": {
+    "jquery": "~1.7.2"
+  }
+}
