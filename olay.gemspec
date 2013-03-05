@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'olay'
-  spec.version = '0.0.1'
+  spec.version = '0.1.0'
   spec.authors = ['Casey Foster']
   spec.email = ['c@sey.me']
   spec.summary = "Overlays that don't suck."
