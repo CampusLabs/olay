@@ -22,9 +22,11 @@ npm install olay
 
 ## Example
 
+Try running this code on the [demo page](http://orgsync.github.com/olay).
+
 ```js
 // Show "¡Olé!" for one second and then hide, alerting "Farewell, mí amigo.".
-var olay = new Olay('<h1>¡Olé!</h1>' {duration: 1000});
+var olay = new Olay('<h1>¡Olé!</h1>', {duration: 1000});
 olay.$el.on('hide', function () { alert('Farewell, mí amigo.'); });
 olay.show();
 ```
@@ -34,7 +36,7 @@ olay.show();
 ### Olay(el [, options])
 
 - **el** - a jQuery object, DOM node, jQuery selector or raw HTML.
-- **options** - An optional object with any or all of the following.
+- **options** - An optional object with any or all of the following...
   - **duration** `0` - The number of milliseconds to display the olay before
     automatically invoking `hide`. A `0` duration means the olay will be
     displayed indefinitely.
@@ -47,8 +49,8 @@ olay.show();
       - `'js-olay-scale-up'`
       - `'js-olay-scale-down'`
   - **transitionDuration** `250` - The duration of the transition in
-    milliseconds. **IMPORTANT! The `transitionDuration` must match `transition-
-    duration` in your CSS to work properly.**
+    milliseconds. **IMPORTANT! The `transitionDuration` must match
+    `transition-duration` in your CSS to work properly.**
   - **hideOnKeys** `[27]` - An array of keycodes that should hide the olay
     when pressed. Set to `[]` or a falsy value to disable.
   - **hideOnClick** `true` - A boolean specifiying whether the olay should be
