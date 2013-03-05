@@ -6,6 +6,8 @@
 
 ## Install
 
+Olay's one dependency is jQuery, so include that before Olay.
+
 ```html
 <link rel='stylesheet' href='https://raw.github.com/orgsync/olay/master/index.css'>
 <script src='https://raw.github.com/orgsync/olay/master/index.js'></script>
