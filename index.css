@@ -40,19 +40,19 @@
   transition: all .25s cubic-bezier(.5, 0, .5, 1);
 }
 
-.js-olay-flip.js-olay-container {
-  -webkit-perspective: 500px;
-  -moz-perspective: 500px;
-  -ms-perspective: 500px;
-  -o-perspective: 500px;
-  perspective: 500px;
-}
-
 .js-olay-scale-up.js-olay-show.js-olay-container,
 .js-olay-scale-down.js-olay-show.js-olay-container,
 .js-olay-flip.js-olay-show.js-olay-container,
 .js-olay-slide.js-olay-show.js-olay-container {
   opacity: 1;
+}
+
+.js-olay-flip .js-olay-cell {
+  -webkit-perspective: 500px;
+  -moz-perspective: 500px;
+  -ms-perspective: 500px;
+  -o-perspective: 500px;
+  perspective: 500px;
 }
 
 .js-olay-scale-up .js-olay-content,
