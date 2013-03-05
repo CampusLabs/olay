@@ -2,7 +2,6 @@
   'use strict';
 
   var $ = window.jQuery;
-  var _ = window._;
   var chai = window.chai;
   var mocha = window.mocha;
   var Olay = window.Olay;
@@ -99,7 +98,7 @@
     it('should hide after a defined duration', function (done) {
       olay.duration = 1;
       olay.show();
-      _.delay(function () {
+      setTimeout(function () {
         $('.js-olay-container').should.have.length(0);
         done();
       }, 1);

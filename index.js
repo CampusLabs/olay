@@ -3,7 +3,6 @@
 
   // Store a local reference to jQuery.
   var $ = window.jQuery;
-  var _ = window._;
 
   // Cache $('body'), it's used a lot.
   var $body;
@@ -13,9 +12,12 @@
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
     var olay = $olay.data('olay');
-    if (!olay || !_.contains(olay.hideOnKeys, ev.which)) return;
-    olay.hide();
-    return false;
+    if (!olay) return;
+    var pressed = ev.which;
+    var keys = olay.hideOnKeys || [];
+    for (var i = 0, l = keys.length; i < l; ++i) {
+      if (pressed === keys[i]) return olay.hide() && false;
+    }
   });
 
   // Create the `Olay` constructor.
@@ -24,7 +26,7 @@
   // var olay = new Olay('Howdy!', {duration: 5000});
   // ```js
   var Olay = window.Olay = function (el, options) {
-    _.extend(this, options);
+    for (var name in options) this[name] = options[name];
     this.$container = $('<div>')
       .addClass('js-olay-container')
       .addClass(this.transition)
@@ -43,7 +45,7 @@
   };
 
   // Define `prototype` properties and methods for `Olay`.
-  _.extend(Olay.prototype, {
+  var proto = {
 
     // How long the olay should be displayed for (in ms)?
     // `0` means indefinitely.
@@ -76,16 +78,18 @@
       // not desirable in a transition...
       this.$container.data('olay', this).height();
       this.$container.addClass('js-olay-show');
-      this.$content.on('click', '.js-olay-hide', _.bind(this.hide, this));
+      var self = this;
+      var hide = function () { self.hide(); };
+      this.$content.on('click', '.js-olay-hide', hide);
       if (this.hideOnClick) {
-        this.$container.click(_.bind(this.hide, this));
+        this.$container.click(hide);
         this.$content.click(function (ev) { ev.stopPropagation(); });
       }
       this.$el.trigger('show');
       var duration = this.duration;
       if (!duration) return this;
       duration += this.transitionDuration;
-      this._timeout = _.delay(_.bind(this.hide, this), duration);
+      this._timeout = setTimeout(hide, duration);
       return this;
     },
 
@@ -98,7 +102,8 @@
       this.$el.trigger('hide');
       var duration = this.transitionDuration;
       if (!duration) return this._remove();
-      this._timeout = _.delay(_.bind(this._remove, this), duration);
+      var self = this;
+      this._timeout = setTimeout(function () { self._remove(); }, duration);
       return this;
     },
 
@@ -135,5 +140,8 @@
       });
       return this;
     }
-  });
+  };
+
+  // Extend `Olay.prototype`.
+  for (var name in proto) Olay.prototype[name] = proto[name];
 })();

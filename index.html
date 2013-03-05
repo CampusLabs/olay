@@ -8,7 +8,6 @@
     <title>Olay Demo</title>
     <link rel='stylesheet' href='index.css'>
     <script src='vendor/jquery.js'></script>
-    <script src='vendor/underscore.js'></script>
     <script src='index.js'></script>
     <style>
       body {
@@ -48,7 +47,6 @@
     <script>
       (function () {
         var $ = window.jQuery;
-        var _ = window._;
 
         var $closer;
         var $olayception;
@@ -75,7 +73,7 @@
   </head>
 
   <body>
-    <h1>Olay Demo</h1>
+    <h1 class='js-tipster' data-tipster='Testing'>Olay Demo</h1>
     <div class='js-new-olay'>
       <select class='js-transition'>
         <option value='js-olay-scale-up'>Scale Up</option>
