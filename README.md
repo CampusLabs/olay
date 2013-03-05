@@ -17,28 +17,34 @@
 npm install olay
 ```
 
-...and get the js/css files from `node_modules/olay/index.js` and
+...and get the JavaScript and CSS files from `node_modules/olay/index.js` and
 `node_modules/olay/index.css` respectively.
 
-## Use
+## Example
 
-Coming soon...
-
-## Clone
-
-```
-git clone git@github.com:orgsync/olay
-npm install
+```js
+// Show "¡Olé!" for one second and then hide, alerting "Farewell, mí amigo.".
+var olay = new Olay('<h1>¡Olé!</h1>' {duration: 1000});
+olay.$el.on('hide', function () { alert('Farewell, mí amigo.'); });
+olay.show();
 ```
 
-### Demo
+## API
 
-```
-open index.html
-```
+### Olay(el [, options])
 
-### Test
-
-```bash
-open test/index.html
-```
+- **el** - a jQuery object, DOM node, or raw HTML.
+- **options** - An optional object with any or all of the following.
+  - **duration** _default_ `0` - The number of milliseconds to display the olay
+    before automatically invoking `hide`. A `0` duration means the olay will be
+    displayed indefinitely.
+  - **transition** _default_ `'js-olay-flip'` - The transition to use. Since
+    this property simply refers to the class that will be added to the `
+    $container` element, it is very easy to create your own CSS transitions and
+    namespace them with whatever transition class you'd like. Olay comes with:
+      - `'js-olay-flip'`
+      - `'js-olay-slide'`
+      - `'js-olay-scale-up'`
+      - `'js-olay-scale-down'`
+  - **transitionDuration** _default_ `250` - The duration of the transition.
+    **IMPORTANT! The `transitionDuration` must match `transition-duration` in your CSS to work properly.**
