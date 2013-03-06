@@ -42,14 +42,14 @@ olay.show();
   - **duration** `0` - The number of milliseconds to display the olay before
     automatically invoking `hide`. A `0` duration means the olay will be
     displayed indefinitely.
-  - **transition** `'js-olay-flip'` - The transition to use. Since
+  - **transition** `'js-olay-scale-up'` - The transition to use. Since
     this property simply refers to the class that will be added to the `
     $container` element, it is very easy to create your own CSS transitions and
     namespace them with whatever transition class you'd like. Olay comes with:
-      - `'js-olay-flip'`
-      - `'js-olay-slide'`
       - `'js-olay-scale-up'`
       - `'js-olay-scale-down'`
+      - `'js-olay-slide'`
+      - `'js-olay-flip'`
   - **transitionDuration** `250` - The duration of the transition in
     milliseconds. **IMPORTANT! The `transitionDuration` must match
     `transition-duration` in your CSS to work properly.**

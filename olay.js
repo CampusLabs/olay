@@ -50,7 +50,7 @@
     // What transition should be used? This simply refers to a class that will
     // be added to the `$container` when shown. Use this to style different
     // transitions with CSS.
-    transition: 'js-olay-flip',
+    transition: 'js-olay-scale-up',
 
     // How long should the olay take to transition in or out?
     // `0` means instantly.
