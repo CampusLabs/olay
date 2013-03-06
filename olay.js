@@ -64,7 +64,7 @@
 
     // Show the olay.
     show: function () {
-      var inDom = $.contains($('body'), this.$container);
+      var inDom = $.contains($('body')[0], this.$container[0]);
       if (inDom && this.$container.hasClass('js-olay-show')) return this;
       clearTimeout(this._timeout);
       if (!inDom) this._append();
