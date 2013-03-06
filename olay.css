@@ -35,8 +35,8 @@ body.js-olay-visible {
 
 .js-olay-scale-up.js-olay-container,
 .js-olay-scale-down.js-olay-container,
-.js-olay-flip.js-olay-container,
-.js-olay-slide.js-olay-container {
+.js-olay-slide.js-olay-container,
+.js-olay-flip.js-olay-container {
   opacity: 0;
   -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
@@ -47,8 +47,8 @@ body.js-olay-visible {
 
 .js-olay-scale-up.js-olay-show.js-olay-container,
 .js-olay-scale-down.js-olay-show.js-olay-container,
-.js-olay-flip.js-olay-show.js-olay-container,
-.js-olay-slide.js-olay-show.js-olay-container {
+.js-olay-slide.js-olay-show.js-olay-container,
+.js-olay-flip.js-olay-show.js-olay-container {
   opacity: 1;
 }
 
@@ -62,8 +62,8 @@ body.js-olay-visible {
 
 .js-olay-scale-up .js-olay-content,
 .js-olay-scale-down .js-olay-content,
-.js-olay-flip .js-olay-content,
-.js-olay-slide .js-olay-content {
+.js-olay-slide .js-olay-content,
+.js-olay-flip .js-olay-content {
   -webkit-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -moz-transition: all .25s cubic-bezier(.5, 0, .5, 1);
   -ms-transition: all .25s cubic-bezier(.5, 0, .5, 1);
@@ -96,22 +96,6 @@ body.js-olay-visible {
   transform: scale(1);
 }
 
-.js-olay-flip .js-olay-content {
-  -webkit-transform: rotateX(90deg);
-  -moz-transform: rotateX(90deg);
-  -ms-transform: rotateX(90deg);
-  -o-transform: rotateX(90deg);
-  transform: rotateX(90deg);
-}
-
-.js-olay-flip.js-olay-show .js-olay-content {
-  -webkit-transform: rotateX(0);
-  -moz-transform: rotateX(0);
-  -ms-transform: rotateX(0);
-  -o-transform: rotateX(0);
-  transform: rotateX(0);
-}
-
 .js-olay-slide .js-olay-content {
   -webkit-transform: translate(0, -100%);
   -moz-transform: translate(0, -100%);
@@ -126,4 +110,20 @@ body.js-olay-visible {
   -ms-transform: translate(0, 0);
   -o-transform: translate(0, 0);
   transform: translate(0, 0);
+}
+
+.js-olay-flip .js-olay-content {
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  -ms-transform: rotateX(90deg);
+  -o-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+}
+
+.js-olay-flip.js-olay-show .js-olay-content {
+  -webkit-transform: rotateX(0);
+  -moz-transform: rotateX(0);
+  -ms-transform: rotateX(0);
+  -o-transform: rotateX(0);
+  transform: rotateX(0);
 }
