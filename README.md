@@ -13,14 +13,14 @@ Olay's one dependency is jQuery, so include that before Olay.
 <script src='https://raw.github.com/orgsync/olay/master/olay.js'></script>
 ```
 
-...or...
+...or use [bower](https://github.com/twitter/bower)...
 
 ```
 bower install olay
 ```
 
-...and get the JavaScript and CSS files from `component/olay/olay.js` and
-`component/olay/olay.css` respectively.
+...and get the JavaScript and CSS files from `components/olay/olay.js` and
+`components/olay/olay.css` respectively.
 
 ## Example
 
