@@ -9,18 +9,18 @@ Accessible **O**ver **lay**s that don't suck!
 Olay's one dependency is jQuery, so include that before Olay.
 
 ```html
-<link rel='stylesheet' href='https://raw.github.com/orgsync/olay/master/index.css'>
-<script src='https://raw.github.com/orgsync/olay/master/index.js'></script>
+<link rel='stylesheet' href='https://raw.github.com/orgsync/olay/master/olay.css'>
+<script src='https://raw.github.com/orgsync/olay/master/olay.js'></script>
 ```
 
 ...or...
 
 ```
-npm install olay
+bower install olay
 ```
 
-...and get the JavaScript and CSS files from `node_modules/olay/index.js` and
-`node_modules/olay/index.css` respectively.
+...and get the JavaScript and CSS files from `component/olay/olay.js` and
+`component/olay/olay.css` respectively.
 
 ## Example
 

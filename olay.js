@@ -105,14 +105,20 @@
 
     // Append `$container` to the DOM. Used internally.
     _append: function () {
-      this._activeElement = document.activeElement;
+      var $body = $('body');
+      var $olays = $('.js-olay-container');
+      var active = document.activeElement;
+      this._$active =
+        $olays.length && active === $body[0] ?
+        $olays.last() :
+        $(active);
       $(':input').each(function () {
         var $t = $(this);
         if ('olayTabindex' in $t.data()) return;
         $t.data('olayTabindex', $t.attr('tabindex') || null)
           .attr('tabindex', -1);
       });
-      $('body').addClass('js-olay-visible').append(this.$container);
+      $body.addClass('js-olay-visible').append(this.$container);
       this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
       return this;
     },
@@ -120,6 +126,7 @@
     // Detach or remove `$container` from the DOM. Used internally.
     _remove: function () {
       this.$container.remove();
+      this._$active.attr('tabindex', 0).focus().removeAttr('tabindex');
       var $olays = $('.js-olay-container');
       ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
         .find(':input').each(function () {
@@ -127,7 +134,6 @@
           $t.attr('tabindex', $t.data('olayTabindex'))
             .removeData('olayTabindex');
         });
-      this._activeElement.focus();
       return this;
     }
   };
