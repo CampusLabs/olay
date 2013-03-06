@@ -4,10 +4,6 @@
   // Store a local reference to jQuery.
   var $ = window.jQuery;
 
-  // Cache $('body'), it's used a lot.
-  var $body;
-  $(function () { $body = $('body'); });
-
   // Listen for keydown events.
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
@@ -39,7 +35,7 @@
       .append(
     this.$content = $('<div>')
       .addClass('js-olay-content')
-      .attr('role', 'alertdialog')
+      .attr({role: 'alertdialog', 'aria-label': this.ariaLabel, tabindex: 0})
       .append(
     this.$el = el instanceof $ ? el : $(el)))));
   };
@@ -68,7 +64,7 @@
 
     // Show the olay.
     show: function () {
-      var inDom = $.contains($body, this.$container);
+      var inDom = $.contains($('body'), this.$container);
       if (inDom && this.$container.hasClass('js-olay-show')) return this;
       clearTimeout(this._timeout);
       if (!inDom) this._append();
@@ -109,6 +105,8 @@
 
     // Append `$container` to the DOM. Used internally.
     _append: function () {
+      this._activeElement = document.activeElement;
+      var $body = $('body');
       if (!$body.data('olayStyle')) {
         $body.data('olayStyle', $body.attr('style') || null)
           .css('overflow', 'hidden');
@@ -119,8 +117,9 @@
         $t.data('olayTabindex', $t.attr('tabindex') || null)
           .attr('tabindex', -1);
       });
-      $(':input:focus').blur();
+      this.$content.attr('aria-hidden', true);
       $body.append(this.$container);
+      this.$content.attr('aria-hidden', false).focus();
       return this;
     },
 
@@ -131,13 +130,14 @@
       this.$container.remove();
       var $unTabindex = $olays.eq(length - 2);
       if (length === 1) {
-        $unTabindex = $body.attr('style', $body.data('olayStyle'))
-          .removeData('olayStyle');
+        var $body = ($unTabindex = $('body'));
+        $body.attr('style', $body.data('olayStyle')).removeData('olayStyle');
       }
       $unTabindex.find(':input').each(function () {
         var $t = $(this);
         $t.attr('tabindex', $t.data('olayTabindex')).removeData('olayTabindex');
       });
+      this._activeElement.focus();
       return this;
     }
   };

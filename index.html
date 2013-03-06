@@ -60,14 +60,16 @@
           $el.find('.js-show-olay').on('click', newOlay);
           (new Olay($el, {
             transition: $('.js-transition').last().val(),
-            duration: +$('.js-duration').last().val()
+            duration: +$('.js-duration').last().val(),
+            ariaLabel: 'Olay kicks ass!'
           })).show();
+          return false;
         };
 
         $(function () {
           $olayception = $('.js-olayception').remove();
           $closer = $('.js-closer').remove();
-          $('.js-show-olay').on('click', newOlay);
+          $('.js-new-olay').on('submit', newOlay);
         });
       })();
     </script>
@@ -75,7 +77,7 @@
 
   <body>
     <h1>Olay Demo</h1>
-    <div class='js-new-olay'>
+    <form class='js-new-olay'>
       <select class='js-transition'>
         <option value='js-olay-flip'>Flip</option>
         <option value='js-olay-slide'>Slide</option>
@@ -83,11 +85,11 @@
         <option value='js-olay-scale-down'>Scale Down</option>
       </select>
       <input class='js-duration' placeholder='Duration (ms)'>
-      <button class='js-show-olay'>Show</button>
-    </div>
-    <div class='js-olayception'>OLAYCEPTION</div>
+      <input type='submit' class='js-show-olay' value='Show'>
+    </form>
+    <div id='olayception' class='js-olayception'>OLAYCEPTION</div>
     <div class='js-closer'>
-      To close, press ESC or click <span class='js-olay-hide'>HERE</span>.
+      To close, press ESC or click <button class='js-olay-hide'>HERE</button>.
     </div>
   </body>
 

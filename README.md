@@ -57,6 +57,7 @@ olay.show();
     when pressed. Set to `[]` or a falsy value to disable.
   - **hideOnClick** `true` - A boolean specifiying whether the olay should be
     hidden when anything outside the `$content` element is clicked.
+  - **ariaLabel** - A label to describe the olay for ARIA compliance.
 
 ### $container
 
