@@ -28,6 +28,7 @@ body.js-olay-visible {
 .js-olay-content {
   display: inline-block;
   position: relative;
+  outline: none;
 }
 
 /* Built-in Transitions */

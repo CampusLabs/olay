@@ -113,7 +113,7 @@
           .attr('tabindex', -1);
       });
       $('body').addClass('js-olay-visible').append(this.$container);
-      this.$content.attr('tabindex', 0).focus().removeAttr('tabindex').blur();
+      this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
       return this;
     },
 
