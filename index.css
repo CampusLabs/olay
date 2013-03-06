@@ -1,3 +1,7 @@
+body.js-olay-visible {
+  overflow: hidden;
+}
+
 .js-olay-container {
   position: fixed;
   z-index: 999;

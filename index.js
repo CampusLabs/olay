@@ -35,7 +35,7 @@
       .append(
     this.$content = $('<div>')
       .addClass('js-olay-content')
-      .attr({role: 'alertdialog', 'aria-label': this.ariaLabel, tabindex: 0})
+      .attr({role: 'alertdialog', 'aria-label': this.ariaLabel})
       .append(
     this.$el = el instanceof $ ? el : $(el)))));
   };
@@ -106,37 +106,27 @@
     // Append `$container` to the DOM. Used internally.
     _append: function () {
       this._activeElement = document.activeElement;
-      var $body = $('body');
-      if (!$body.data('olayStyle')) {
-        $body.data('olayStyle', $body.attr('style') || null)
-          .css('overflow', 'hidden');
-      }
       $(':input').each(function () {
         var $t = $(this);
         if ('olayTabindex' in $t.data()) return;
         $t.data('olayTabindex', $t.attr('tabindex') || null)
           .attr('tabindex', -1);
       });
-      this.$content.attr('aria-hidden', true);
-      $body.append(this.$container);
-      this.$content.attr('aria-hidden', false).focus();
+      $('body').addClass('js-olay-visible').append(this.$container);
+      this.$content.attr('tabindex', 0).focus().removeAttr('tabindex').blur();
       return this;
     },
 
     // Detach or remove `$container` from the DOM. Used internally.
     _remove: function () {
-      var $olays = $('.js-olay-container');
-      var length = $olays.length;
       this.$container.remove();
-      var $unTabindex = $olays.eq(length - 2);
-      if (length === 1) {
-        var $body = ($unTabindex = $('body'));
-        $body.attr('style', $body.data('olayStyle')).removeData('olayStyle');
-      }
-      $unTabindex.find(':input').each(function () {
-        var $t = $(this);
-        $t.attr('tabindex', $t.data('olayTabindex')).removeData('olayTabindex');
-      });
+      var $olays = $('.js-olay-container');
+      ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
+        .find(':input').each(function () {
+          var $t = $(this);
+          $t.attr('tabindex', $t.data('olayTabindex'))
+            .removeData('olayTabindex');
+        });
       this._activeElement.focus();
       return this;
     }
