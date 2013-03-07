@@ -16,13 +16,25 @@
     }
   });
 
+  // This private function will be used to stop event propagation in $content.
+  var stopPropagation = function (ev) { ev.stopPropagation(); };
+
   // Create the `Olay` constructor.
   //
   // ```js
   // var olay = new Olay('Howdy!', {duration: 5000});
   // ```js
   var Olay = window.Olay = function (el, options) {
+
+    // Extend the instance with its options.
     for (var name in options) this[name] = options[name];
+
+    // Store a bound `hide` to be used for callbacks. This is also used to
+    // ensure event callbacks can be removed consistently.
+    var self = this;
+    this._hide = function () { return self.hide(); };
+
+    // Create the necessary DOM nodes.
     this.$container = $('<div>')
       .addClass('js-olay-container')
       .addClass(this.transition)
@@ -36,8 +48,10 @@
     this.$content = $('<div>')
       .addClass('js-olay-content')
       .attr({role: 'alertdialog', 'aria-label': this.ariaLabel})
-      .append(
-    this.$el = el instanceof $ ? el : $(el)))));
+      .on('click', '.js-olay-hide', this._hide))));
+
+    // Finally, set the element.
+    this.setElement(el);
   };
 
   // Define `prototype` properties and methods for `Olay`.
@@ -62,6 +76,13 @@
     // Should the olay be hidden when there is a click outside the content box?
     hideOnClick: true,
 
+    // Preserve the DOM data and events for this olay. If this is set to `true`,
+    // be sure to either set it to `false` before your final `hide` call, or
+    // after your final `hide` call invoke `destroy()` after your transition.
+    // Failure to do this will cause memory leaks. When `preserve` is set to
+    // `false` this is handled automaticaly.
+    preserve: false,
+
     // Show the olay.
     show: function () {
       var inDom = $.contains($('body')[0], this.$container[0]);
@@ -73,19 +94,17 @@
       // this will apply the end result of the transition instantly, which is
       // not desirable in a transition...
       this.$container.data('olay', this).height();
-      this.$container.addClass('js-olay-show');
-      var self = this;
-      var hide = function () { self.hide(); };
-      this.$content.on('click', '.js-olay-hide', hide);
+      this.$container.addClass('js-olay-show').off('click', this._hide);
+      this.$content.off('click', stopPropagation);
       if (this.hideOnClick) {
-        this.$container.click(hide);
-        this.$content.click(function (ev) { ev.stopPropagation(); });
+        this.$container.click(this._hide);
+        this.$content.click(stopPropagation);
       }
       this.$el.trigger('show');
       var duration = this.duration;
       if (!duration) return this;
       duration += this.transitionDuration;
-      this._timeout = setTimeout(hide, duration);
+      this._timeout = setTimeout(this._hide, duration);
       return this;
     },
 
@@ -95,11 +114,23 @@
       if (!this.$container.hasClass('js-olay-show')) return;
       clearTimeout(this._timeout);
       this.$container.removeClass('js-olay-show');
-      this.$el.trigger('hide');
       var duration = this.transitionDuration;
       if (!duration) return this._remove();
       var self = this;
       this._timeout = setTimeout(function () { self._remove(); }, duration);
+      return this;
+    },
+
+    // Use this method to set or update `$el`.
+    setElement: function (el) {
+      this.$content.empty().append(this.$el = el instanceof $ ? el : $(el));
+    },
+
+    // Completely remove the `$container` element and its children and all of
+    // the associated data and events. This will only ever need to be called if
+    // the `preserve` option is `true` to prevent memory leaks.
+    destroy: function () {
+      this.$container.remove();
       return this;
     },
 
@@ -123,9 +154,9 @@
       return this;
     },
 
-    // Detach or remove `$container` from the DOM. Used internally.
+    // Detach and optionally remove `$container` from the DOM. Used internally.
     _remove: function () {
-      this.$container.remove();
+      this.$container.detach();
       this._$active.attr('tabindex', 0).focus().removeAttr('tabindex');
       var $olays = $('.js-olay-container');
       ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
@@ -134,6 +165,8 @@
           $t.attr('tabindex', $t.data('olayTabindex'))
             .removeData('olayTabindex');
         });
+      this.$el.trigger('hide');
+      if (!this.preserve) this.destroy();
       return this;
     }
   };

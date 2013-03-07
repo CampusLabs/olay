@@ -35,7 +35,7 @@ olay.show();
 
 ## API
 
-### Olay(el [, options])
+### Olay([el [, options]])
 
 - **el** - a jQuery object, DOM node, jQuery selector or raw HTML.
 - **options** - An optional object with any or all of the following...
@@ -58,6 +58,11 @@ olay.show();
   - **hideOnClick** `true` - A boolean specifiying whether the olay should be
     hidden when anything outside the `$content` element is clicked.
   - **ariaLabel** - A label to describe the olay for ARIA compliance.
+  - **preserve** `false` - If `true`, `detach` will be used to remove the `
+    $container` rather than `remove`. This effectively _preserve_s the jQuery
+    data associated with olay's DOM elements so they can be re-appended later.
+    Use this option if you are going to be showing and hiding the same DOM
+    elements repeatedly.
 
 ### $container
 
@@ -93,6 +98,18 @@ Show the olay, appending `$container` to the DOM.
 
 Hide the olay. **Note:** `$container` is removed from the DOM with jQuery's
 `remove` method.
+
+## setElement(el)
+
+Set the `$el` property and properly append it to `$content`. This allows the
+creation of "empty" olay instances to be populated later.
+
+## destroy()
+
+Remove the `$container` from the DOM using jQuery's `remove`. This _destroy_s
+all jQuery data (`.data`, events, etc.) that was associated with the
+`$container` and its children. **This will be handled automatically and should
+only ever need to be called when `preserve` is `true`.**
 
 ### 'show'/'hide' Events
 
