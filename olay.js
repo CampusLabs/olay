@@ -9,10 +9,18 @@
     var $olay = $('.js-olay-container').last();
     var olay = $olay.data('olay');
     if (!olay) return;
-    var pressed = ev.which;
+    var which = ev.which;
     var keys = olay.hideOnKeys || [];
     for (var i = 0, l = keys.length; i < l; ++i) {
-      if (pressed === keys[i]) return olay.hide() && false;
+      if (which === keys[i]) return olay.hide() && false;
+    }
+    if (which === 9) {
+      setTimeout(function () {
+        if (!$olay.find(':focus').length) {
+          $(':focus').blur();
+          $olay.find(':input').first().focus();
+        }
+      }, 0);
     }
   });
 
@@ -143,12 +151,6 @@
         $olays.length && active === $body[0] ?
         $olays.last() :
         $(active);
-      $(':input').each(function () {
-        var $t = $(this);
-        if ('olayTabindex' in $t.data()) return;
-        $t.data('olayTabindex', $t.attr('tabindex') || null)
-          .attr('tabindex', -1);
-      });
       $body.addClass('js-olay-visible').append(this.$container);
       this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
       return this;
@@ -159,12 +161,7 @@
       this.$container.detach();
       this._$active.attr('tabindex', 0).focus().removeAttr('tabindex');
       var $olays = $('.js-olay-container');
-      ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
-        .find(':input').each(function () {
-          var $t = $(this);
-          $t.attr('tabindex', $t.data('olayTabindex'))
-            .removeData('olayTabindex');
-        });
+      if (!$olays.length) $('body').removeClass('js-olay-visible');
       this.$el.trigger('hide');
       if (!this.preserve) this.destroy();
       return this;

@@ -116,7 +116,7 @@
     });
   });
 
-  describe('Tabindex', function () {
+  describe('Tab Locking', function () {
     var $input;
 
     before(function () {
@@ -126,15 +126,27 @@
         .appendTo('body');
     });
 
-    it('should be locked when an olay is shown', function () {
+    it('should blur the active element on show', function () {
+      $input.focus();
       olay.show();
-      $input.attr('tabindex').should.equal('-1');
+      $input.is(':focus').should.not.be.ok;
+    });
+
+    it('should be locked when an olay is shown', function (done) {
+      $input.focus();
+      $(document)
+        .one('keydown', function () {
+          setTimeout(function () {
+            $input.is(':focus').should.not.be.ok;
+            done();
+          }, 0);
+        })
+        .trigger({type: 'keydown', which: 9});
     });
 
     it('should be restored when an olay is hidden', function () {
       olay.hide();
-      $input.attr('tabindex').should.equal('1');
-
+      $input.is(':focus').should.be.ok;
     });
 
     after(function () {
