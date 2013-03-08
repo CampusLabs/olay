@@ -4,6 +4,13 @@
   // Store a local reference to jQuery.
   var $ = window.jQuery;
 
+  // This private function will be used to stop event propagation in $content.
+  var stopPropagation = function (ev) { ev.stopPropagation(); };
+
+  // Selector for tabbable elements.
+  var tabbable = 'a[href], area[href], :input, iframe, object, embed, ' +
+    '*[tabindex], *[contenteditable]';
+
   // Listen for keydown events.
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
@@ -14,18 +21,7 @@
     for (var i = 0, l = keys.length; i < l; ++i) {
       if (which === keys[i]) return olay.hide() && false;
     }
-    if (which === 9) {
-      setTimeout(function () {
-        if (!$olay.find(':focus').length) {
-          $(':focus').blur();
-          $olay.find(':input').first().focus();
-        }
-      }, 0);
-    }
   });
-
-  // This private function will be used to stop event propagation in $content.
-  var stopPropagation = function (ev) { ev.stopPropagation(); };
 
   // Create the `Olay` constructor.
   //
@@ -151,6 +147,12 @@
         $olays.length && active === $body[0] ?
         $olays.last() :
         $(active);
+      $(tabbable).each(function () {
+        var $t = $(this);
+        if ('olayTabindex' in $t.data()) return;
+        $t.data('olayTabindex', $t.attr('tabindex') || null)
+          .attr('tabindex', -1);
+      });
       $body.addClass('js-olay-visible').append(this.$container);
       this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
       return this;
@@ -161,7 +163,12 @@
       this.$container.detach();
       this._$active.attr('tabindex', 0).focus().removeAttr('tabindex');
       var $olays = $('.js-olay-container');
-      if (!$olays.length) $('body').removeClass('js-olay-visible');
+      ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
+        .find(tabbable).each(function () {
+          var $t = $(this);
+          $t.attr('tabindex', $t.data('olayTabindex'))
+            .removeData('olayTabindex');
+        });
       this.$el.trigger('hide');
       if (!this.preserve) this.destroy();
       return this;

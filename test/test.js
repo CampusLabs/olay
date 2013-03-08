@@ -132,16 +132,8 @@
       $input.is(':focus').should.not.be.ok;
     });
 
-    it('should be locked when an olay is shown', function (done) {
-      $input.focus();
-      $(document)
-        .one('keydown', function () {
-          setTimeout(function () {
-            $input.is(':focus').should.not.be.ok;
-            done();
-          }, 0);
-        })
-        .trigger({type: 'keydown', which: 9});
+    it('should be locked when an olay is shown', function () {
+      $input.attr('tabindex').should.equal('-1');
     });
 
     it('should be restored when an olay is hidden', function () {

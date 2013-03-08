@@ -1,6 +1,6 @@
 {
   "name": "olay",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": ["./olay.js", "./olay.css"],
   "dependencies": {
     "jquery": "x"
