@@ -8,8 +8,8 @@
   var stopPropagation = function (ev) { ev.stopPropagation(); };
 
   // Selector for tabbable elements.
-  var tabbable = 'a[href], area[href], :input, iframe, object, embed, ' +
-    '*[tabindex], *[contenteditable]';
+  var tabbable =
+    ':input, [tabindex], [contenteditable], [href], iframe, object, embed';
 
   // Listen for keydown events.
   $(document).keydown(function (ev) {
@@ -148,10 +148,10 @@
         $olays.last() :
         $(active);
       $(tabbable).each(function () {
+        if ('olayTabindex' in this) return;
         var $t = $(this);
-        if ('olayTabindex' in $t.data()) return;
-        $t.data('olayTabindex', $t.attr('tabindex') || null)
-          .attr('tabindex', -1);
+        this.olayTabindex = $t.attr('tabindex') || null;
+        $t.attr('tabindex', -1);
       });
       $body.addClass('js-olay-visible').append(this.$container);
       this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
@@ -165,9 +165,8 @@
       var $olays = $('.js-olay-container');
       ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
         .find(tabbable).each(function () {
-          var $t = $(this);
-          $t.attr('tabindex', $t.data('olayTabindex'))
-            .removeData('olayTabindex');
+          $(this).attr('tabindex', this.olayTabindex);
+          delete this.olayTabindex;
         });
       this.$el.trigger('hide');
       if (!this.preserve) this.destroy();
