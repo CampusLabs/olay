@@ -149,9 +149,9 @@
         $(active);
       $(tabbable).each(function () {
         if ('olayTabindex' in this) return;
-        var $t = $(this);
-        this.olayTabindex = $t.attr('tabindex') || null;
-        $t.attr('tabindex', -1);
+        var $self = $(this);
+        this.olayTabindex = $self.attr('tabindex') || null;
+        $self.attr('tabindex', -1);
       });
       $body.addClass('js-olay-visible').append(this.$container);
       this.$content.attr('tabindex', 0).focus().removeAttr('tabindex');
