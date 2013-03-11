@@ -8,6 +8,12 @@
   var tabbable =
     ':input, [tabindex], [contenteditable], [href], iframe, object, embed';
 
+  // Convenience method for `off`/`on`ing in jQuery.
+  var delegate = function ($el, ev, selector, cb) {
+    $el.off.call($el, ev, selector, cb);
+    $el.on.call($el, ev, selector, cb);
+  };
+
   // Listen for keydown events.
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
@@ -42,7 +48,7 @@
 
     // Create the necessary DOM nodes.
     this.$container = $('<div>')
-      .addClass('js-olay-container')
+      .addClass('js-olay-container ')
       .addClass(this.transition)
       .append(
     this.$table = $('<div>')
@@ -98,19 +104,17 @@
       // Force a redraw before adding the transition class. Not doing this will
       // apply the end result of the transition instantly, which is not
       // desirable in a transition...
-      this.$container.height();
-      this.$container.addClass('js-olay-show').data('olay', this)
-        .off('click', this._$containerClick)
-        .on('click', this._$containerClick);
-      this.$content
-        .off('click', this._$contentClick)
-        .on('click', this._$contentClick)
-        .off('click', '.js-olay-hide', this._hide)
-        .on('click', '.js-olay-hide', this._hide);
+      this.$container.data('olay', this).height();
+      this.$container.addClass('js-olay-show');
+
+      // Delegate events, ensuring no double-binding.
+      delegate(this.$container, 'click', this._$containerClick);
+      delegate(this.$content, 'click', this._$contentClick);
+      delegate(this.$content, 'click', '.js-olay-hide', this._hide);
 
       this.$el.trigger('show');
       var duration = this.duration;
-      if (!duration) return this;
+      if (!this.duration) return this;
       duration += this.transitionDuration;
       this._timeout = setTimeout(this._hide, duration);
       return this;
@@ -132,6 +136,7 @@
     // Use this method to set or update `$el`.
     setElement: function (el) {
       this.$content.empty().append(this.$el = el instanceof $ ? el : $(el));
+      return this;
     },
 
     // Completely remove the `$container` element and its children and all of
@@ -147,10 +152,8 @@
       var $body = $('body');
       var $olays = $('.js-olay-container');
       var active = document.activeElement;
-      this._$active =
-        $olays.length && active === $body[0] ?
-        $olays.last() :
-        $(active);
+      var useLast = $olays.length && active === $body[0];
+      this._$active = useLast ? $olays.last() : $(active);
       $(tabbable).each(function () {
         if ('olayTabindex' in this) return;
         var $self = $(this);
