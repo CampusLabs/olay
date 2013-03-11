@@ -99,10 +99,20 @@
     });
 
     it('should hide when $container is clicked, but not $content', function () {
-      olay.show().$content.click();
+      olay.show().$content.trigger({type: 'click', originalEvent: {}});
       $('.js-olay-container').should.have.length(1);
-      olay.$cell.click();
+      olay.$container.trigger({type: 'click', originalEvent: {}});
       $('.js-olay-container').should.have.length(0);
+    });
+
+    it("shouldn't hide if `hideOnClick` is `false`", function () {
+      olay.hideOnClick = false;
+      olay.show().$content.trigger({type: 'click', originalEvent: {}});
+      $('.js-olay-container').should.have.length(1);
+      olay.$container.trigger({type: 'click', originalEvent: {}});
+      $('.js-olay-container').should.have.length(1);
+      olay.hide();
+      olay.hideOnClick = true;
     });
 
     it('should hide after a defined duration', function (done) {
@@ -165,7 +175,7 @@
         ++hidden;
         return hide.apply(olay, arguments);
       };
-      olay.show().$container.click();
+      olay.show().$container.trigger({type: 'click', originalEvent: {}});
       hidden.should.equal(1);
     });
 

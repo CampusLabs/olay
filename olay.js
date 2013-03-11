@@ -4,9 +4,6 @@
   // Store a local reference to jQuery.
   var $ = window.jQuery;
 
-  // This private function will be used to stop event propagation in $content.
-  var stopPropagation = function (ev) { ev.stopPropagation(); };
-
   // Selector for tabbable elements.
   var tabbable =
     ':input, [tabindex], [contenteditable], [href], iframe, object, embed';
@@ -33,10 +30,15 @@
     // Extend the instance with its options.
     for (var name in options) this[name] = options[name];
 
-    // Store a bound `hide` to be used for callbacks. This is also used to
+    // Store bound listeners to be used for callbacks. This is also used to
     // ensure event callbacks can be removed consistently.
     var self = this;
     this._hide = function () { return self.hide(); };
+    var event;
+    this._$containerClick = function (ev) {
+      if (self.hideOnClick && event !== ev.originalEvent) self.hide();
+    };
+    this._$contentClick = function (ev) { event = ev.originalEvent; };
 
     // Create the necessary DOM nodes.
     this.$container = $('<div>')
@@ -51,8 +53,7 @@
       .append(
     this.$content = $('<div>')
       .addClass('js-olay-content')
-      .attr({role: 'alertdialog', 'aria-label': this.ariaLabel})
-      .on('click', '.js-olay-hide', this._hide))));
+      .attr({role: 'alertdialog', 'aria-label': this.ariaLabel}))));
 
     // Finally, set the element.
     this.setElement(el);
@@ -94,16 +95,19 @@
       clearTimeout(this._timeout);
       if (!inDom) this._append();
 
-      // Force a redraw before and after adding the transition class. Not doing
-      // this will apply the end result of the transition instantly, which is
-      // not desirable in a transition...
-      this.$container.data('olay', this).height();
-      this.$container.addClass('js-olay-show').off('click', this._hide);
-      this.$content.off('click', stopPropagation);
-      if (this.hideOnClick) {
-        this.$container.click(this._hide);
-        this.$content.click(stopPropagation);
-      }
+      // Force a redraw before adding the transition class. Not doing this will
+      // apply the end result of the transition instantly, which is not
+      // desirable in a transition...
+      this.$container.height();
+      this.$container.addClass('js-olay-show').data('olay', this)
+        .off('click', this._$containerClick)
+        .on('click', this._$containerClick);
+      this.$content
+        .off('click', this._$contentClick)
+        .on('click', this._$contentClick)
+        .off('click', '.js-olay-hide', this._hide)
+        .on('click', '.js-olay-hide', this._hide);
+
       this.$el.trigger('show');
       var duration = this.duration;
       if (!duration) return this;
