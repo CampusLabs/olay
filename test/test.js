@@ -62,16 +62,16 @@
   });
 
   describe('Callbacks', function () {
-    it('should trigger `show` after append', function (done) {
-      olay.$el.one('show', function () {
+    it('should trigger `olay:show` after append', function (done) {
+      olay.$el.one('olay:show', function () {
         $('.js-olay-container').length.should.equal(1);
         done();
       });
       olay.show();
     });
 
-    it('should trigger `hide` when `hide` is invoked', function (done) {
-      olay.$el.one('hide', function () {
+    it('should trigger `olay:hide` when `hide` is invoked', function (done) {
+      olay.$el.one('olay:hide', function () {
         $('.js-olay-container').length.should.equal(0);
         done();
       });

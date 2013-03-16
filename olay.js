@@ -112,7 +112,7 @@
       delegate(this.$content, 'click', this._$contentClick);
       delegate(this.$content, 'click', '.js-olay-hide', this._hide);
 
-      this.$el.trigger('show');
+      this.$el.trigger('olay:show');
       var duration = this.duration;
       if (!this.duration) return this;
       duration += this.transitionDuration;
@@ -175,7 +175,7 @@
           $(this).attr('tabindex', this.olayTabindex);
           delete this.olayTabindex;
         });
-      this.$el.trigger('hide');
+      this.$el.trigger('olay:hide');
       if (!this.preserve) this.destroy();
       return this;
     }
