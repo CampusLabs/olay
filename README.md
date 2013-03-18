@@ -29,7 +29,7 @@ Try running this code on the [demo page](http://orgsync.github.com/olay).
 ```js
 // Show "¡Olé!" for one second and then hide, alerting "Farewell, mí amigo.".
 var olay = new Olay('<h1>¡Olé!</h1>', {duration: 1000});
-olay.$el.on('hide', function () { alert('Farewell, mí amigo.'); });
+olay.$el.on('olay:hide', function () { alert('Farewell, mí amigo.'); });
 olay.show();
 ```
 
@@ -111,10 +111,10 @@ all jQuery data (`.data`, events, etc.) that was associated with the
 `$container` and its children. **This will be handled automatically and should
 only ever need to be called when `preserve` is `true`.**
 
-### 'show'/'hide' Events
+### 'olay:show'/'olay:hide' Events
 
-Olay uses jQuery's event emitter to fire `'show'` and `'hide'` events when
-`show` or `hide` are invoked. See the example above for usage.
+Olay uses jQuery's event emitter to fire `'olay:show'` and `'olay:hide'` events
+when `show` or `hide` are invoked. See the example above for usage.
 
 ### 'js-olay-hide' Class
 
