@@ -48,7 +48,7 @@
 
     // Create the necessary DOM nodes.
     this.$container = $('<div>')
-      .addClass('js-olay-container ')
+      .addClass('js-olay-container')
       .addClass(this.transition)
       .append(
     this.$table = $('<div>')
