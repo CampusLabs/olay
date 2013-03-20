@@ -30,7 +30,7 @@
   //
   // ```js
   // var olay = new Olay('Howdy!', {duration: 5000});
-  // ```js
+  // ```
   var Olay = window.Olay = function (el, options) {
 
     // Extend the instance with its options.
