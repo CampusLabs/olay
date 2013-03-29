@@ -20,49 +20,49 @@
   });
 
   describe('Constructor', function () {
-    it('should create a jQuery $container element', function () {
+    it('creates a jQuery $container element', function () {
       olay.should.have.property('$container');
       olay.$container.should.be.instanceOf($);
     });
 
-    it('should create a jQuery $table element', function () {
+    it('creates a jQuery $table element', function () {
       olay.should.have.property('$table');
       olay.$table.should.be.instanceOf($);
     });
 
-    it('should create a jQuery $cell element', function () {
+    it('creates a jQuery $cell element', function () {
       olay.should.have.property('$cell');
       olay.$cell.should.be.instanceOf($);
     });
 
-    it('should create a jQuery $content element', function () {
+    it('creates a jQuery $content element', function () {
       olay.should.have.property('$content');
       olay.$content.should.be.instanceOf($);
     });
 
-    it('should create a jQuery $el element', function () {
+    it('creates a jQuery $el element', function () {
       olay.should.have.property('$el');
       olay.$el.should.be.instanceOf($);
     });
 
-    it('should give the $el element the passed in $el', function () {
+    it('gives the $el element the passed in $el', function () {
       olay.$el.html().should.equal('hi');
       olay.$el.should.equal($el);
     });
 
-    it('should inherit options', function () {
+    it('inherits options', function () {
       olay.transitionDuration.should.equal(0);
     });
   });
 
   describe('Accessibility', function () {
-    it('should give the $content element the correct ARIA role', function () {
+    it('gives the $content element the correct ARIA role', function () {
       olay.$content.attr('role').should.equal('alertdialog');
     });
   });
 
   describe('Callbacks', function () {
-    it('should trigger `olay:show` after append', function (done) {
+    it('trigger `olay:show` after append', function (done) {
       olay.$el.one('olay:show', function () {
         $('.js-olay-container').length.should.equal(1);
         done();
@@ -70,7 +70,7 @@
       olay.show();
     });
 
-    it('should trigger `olay:hide` when `hide` is invoked', function (done) {
+    it('trigger `olay:hide` when `hide` is invoked', function (done) {
       olay.$el.one('olay:hide', function () {
         $('.js-olay-container').length.should.equal(0);
         done();
@@ -80,32 +80,32 @@
   });
 
   describe('DOM Manipulation', function () {
-    it('should append to the DOM on show', function () {
+    it('appends to the DOM on show', function () {
       olay.show();
       $('.js-olay-container').should.have.length(1);
     });
 
-    it('should remove from the DOM on hide', function () {
+    it('removes from the DOM on hide', function () {
       olay.hide();
       $('.js-olay-container').should.have.length(0);
     });
   });
 
   describe('Hide Options', function () {
-    it('should hide when ESC is pressed', function () {
+    it('hides when ESC is pressed', function () {
       olay.show();
       $(document).trigger({type: 'keydown', which: 27});
       $('.js-olay-container').should.have.length(0);
     });
 
-    it('should hide when $container is clicked, but not $content', function () {
+    it('hides when $container is clicked, but not $content', function () {
       olay.show().$content.trigger({type: 'click', originalEvent: {}});
       $('.js-olay-container').should.have.length(1);
       olay.$container.trigger({type: 'click', originalEvent: {}});
       $('.js-olay-container').should.have.length(0);
     });
 
-    it("shouldn't hide if `hideOnClick` is `false`", function () {
+    it('does not hide if `hideOnClick` is `false`', function () {
       olay.hideOnClick = false;
       olay.show().$content.trigger({type: 'click', originalEvent: {}});
       $('.js-olay-container').should.have.length(1);
@@ -115,7 +115,7 @@
       olay.hideOnClick = true;
     });
 
-    it('should hide after a defined duration', function (done) {
+    it('hides after a defined duration', function (done) {
       olay.duration = 1;
       olay.show();
       setTimeout(function () {
@@ -136,17 +136,17 @@
         .appendTo('body');
     });
 
-    it('should blur the active element on show', function () {
+    it('blurs the active element on show', function () {
       $input.focus();
       olay.show();
       $input.is(':focus').should.not.be.ok;
     });
 
-    it('should be locked when an olay is shown', function () {
+    it('locks when an olay is shown', function () {
       $input.attr('tabindex').should.equal('-1');
     });
 
-    it('should be restored when an olay is hidden', function () {
+    it('restores when an olay is hidden', function () {
       olay.hide();
       $input.is(':focus').should.be.ok;
     });
@@ -162,12 +162,12 @@
       olay.$el.data('test', true);
     });
 
-    it('should store jQuery data on show and hide', function () {
+    it('stores jQuery data on show and hide', function () {
       olay.show().hide();
       olay.$el.data('test').should.be.ok;
     });
 
-    it('should not double up hide events', function () {
+    it('does not double up hide events', function () {
       var hidden = 0;
       olay.show().hide();
       var hide = olay.hide;
@@ -179,13 +179,13 @@
       hidden.should.equal(1);
     });
 
-    it('should wipe data when `destroy`ed', function () {
+    it('wipes data when `destroy`ed', function () {
       olay.destroy();
       (olay.$el.data('test') === void 0).should.be.ok;
       olay.$el.data('test', true);
     });
 
-    it('should wipe data when `false`d', function () {
+    it('wipes data when `false`d', function () {
       olay.preserve = false;
       olay.show().hide();
       (olay.$el.data('test') === void 0).should.be.ok;
@@ -199,7 +199,7 @@
   });
 
   describe('Set Element', function () {
-    it('should allow for an empty constructor', function () {
+    it('allows for an empty constructor', function () {
       var olay = new Olay();
       olay.setElement('<div>late bloomer</div>');
       olay.show();
