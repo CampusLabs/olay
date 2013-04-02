@@ -2,6 +2,7 @@
   "name": "olay",
   "version": "0.1.9",
   "main": ["./olay.js", "./olay.css"],
+  "ignore": ["test", "index.html"],
   "dependencies": {
     "jquery": "x"
   },
