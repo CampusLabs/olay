@@ -40,11 +40,10 @@
     // ensure event callbacks can be removed consistently.
     var self = this;
     this._hide = function () { return self.hide(); };
-    var event;
     this._$containerClick = function (ev) {
-      if (self.hideOnClick && event !== ev.originalEvent) self.hide();
+      var contentClicked = $.contains(self.$cell[0], ev.target);
+      if (self.hideOnClick && !contentClicked) self.hide();
     };
-    this._$contentClick = function (ev) { event = ev.originalEvent; };
 
     // Create the necessary DOM nodes.
     this.$container = $('<div>')
@@ -109,7 +108,6 @@
 
       // Delegate events, ensuring no double-binding.
       delegate(this.$container, 'click', this._$containerClick);
-      delegate(this.$content, 'click', this._$contentClick);
       delegate(this.$content, 'click', '.js-olay-hide', this._hide);
 
       this.$el.trigger('olay:show');
