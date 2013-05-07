@@ -1,4 +1,4 @@
-# Olay
+![olay](http://cl.ly/image/1P3H1V1I3V1a/olay.png)
 
 Accessible **O**ver **lay**s that don't suck!
 
