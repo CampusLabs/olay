@@ -1,4 +1,4 @@
-![olay](http://cl.ly/image/1P3H1V1I3V1a/olay.png)
+![olay](http://cl.ly/image/2U0S0q0c1B16/olay-smaller.png)
 
 Accessible **O**ver **lay**s that don't suck!
 
