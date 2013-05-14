@@ -1,8 +1,14 @@
 {
   "name": "olay",
-  "version": "0.2.1",
-  "main": ["./olay.js", "./olay.css"],
-  "ignore": ["test", "index.html"],
+  "version": "0.2.2",
+  "main": [
+    "./olay.js",
+    "./olay.css"
+  ],
+  "ignore": [
+    "test",
+    "index.html"
+  ],
   "dependencies": {
     "jquery": "x"
   },

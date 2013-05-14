@@ -99,17 +99,18 @@
     });
 
     it('hides when $container is clicked, but not $content', function () {
-      olay.show().$content.trigger({type: 'click', originalEvent: {}});
+      olay.show().$el.click(function () { $(this).detach(); }).click();
       $('.js-olay-container').should.have.length(1);
-      olay.$container.trigger({type: 'click', originalEvent: {}});
+      olay.$content.append(olay.$el);
+      olay.$container.click();
       $('.js-olay-container').should.have.length(0);
     });
 
     it('does not hide if `hideOnClick` is `false`', function () {
       olay.hideOnClick = false;
-      olay.show().$content.trigger({type: 'click', originalEvent: {}});
+      olay.show().$content.click();
       $('.js-olay-container').should.have.length(1);
-      olay.$container.trigger({type: 'click', originalEvent: {}});
+      olay.$container.click();
       $('.js-olay-container').should.have.length(1);
       olay.hide();
       olay.hideOnClick = true;
@@ -175,7 +176,7 @@
         ++hidden;
         return hide.apply(olay, arguments);
       };
-      olay.show().$container.trigger({type: 'click', originalEvent: {}});
+      olay.show().$container.click();
       hidden.should.equal(1);
     });
 

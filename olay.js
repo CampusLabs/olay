@@ -36,15 +36,6 @@
     // Extend the instance with its options.
     for (var name in options) this[name] = options[name];
 
-    // Store bound listeners to be used for callbacks. This is also used to
-    // ensure event callbacks can be removed consistently.
-    var self = this;
-    this._hide = function () { return self.hide(); };
-    this._$containerClick = function (ev) {
-      var contentClicked = $.contains(self.$cell[0], ev.target);
-      if (self.hideOnClick && !contentClicked) self.hide();
-    };
-
     // Create the necessary DOM nodes.
     this.$container = $('<div>')
       .addClass('js-olay-container')
@@ -62,6 +53,15 @@
 
     // Finally, set the element.
     this.setElement(el);
+
+    // Store bound listeners to be used for callbacks. This is also used to
+    // ensure event callbacks can be removed consistently.
+    var self = this;
+    this._hide = function () { return self.hide(); };
+    var $hiders = this.$container.add(this.$table).add(this.$cell);
+    this._$containerClick = function (ev) {
+      if (self.hideOnClick && ~$hiders.index(ev.target)) self.hide();
+    };
   };
 
   // Define `prototype` properties and methods for `Olay`.
