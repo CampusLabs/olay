@@ -35,7 +35,7 @@ olay.show();
 
 ## API
 
-### Olay([el [, options]])
+### new Olay([el [, options]])
 
 - **el** - a jQuery object, DOM node, jQuery selector or raw HTML.
 - **options** - An optional object with any or all of the following...
@@ -99,12 +99,12 @@ Show the olay, appending `$container` to the DOM.
 Hide the olay. **Note:** `$container` is removed from the DOM with jQuery's
 `remove` method.
 
-## setElement(el)
+### setElement(el)
 
 Set the `$el` property and properly append it to `$content`. This allows the
 creation of "empty" olay instances to be populated later.
 
-## destroy()
+### destroy()
 
 Remove the `$container` from the DOM using jQuery's `remove`. This _destroy_s
 all jQuery data (`.data`, events, etc.) that was associated with the
