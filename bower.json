@@ -1,6 +1,6 @@
 {
   "name": "olay",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": [
     "./olay.js",
     "./olay.css"
