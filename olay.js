@@ -16,7 +16,7 @@
   // Listen for keydown events.
   $(document).keydown(function (ev) {
     var $olay = $('.js-olay-container').last();
-    var olay = $olay.data('olay');
+    var olay = $olay[0].olay;
     if (!olay) return;
     var which = ev.which;
     var keys = olay.hideOnKeys || [];
@@ -104,7 +104,8 @@
       // Force a redraw before adding the transition class. Not doing this will
       // apply the end result of the transition instantly, which is not
       // desirable in a transition...
-      this.$container.data('olay', this).height();
+      this.$container[0].olay = this;
+      this.$container.height();
       this.$container.addClass('js-olay-show');
 
       // Delegate events, ensuring no double-binding.
