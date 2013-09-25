@@ -15,9 +15,9 @@
 
   // Listen for keydown events.
   $(document).keydown(function (ev) {
-    var $olay = $('.js-olay-container').last();
-    var olay = $olay[0].olay;
-    if (!olay) return;
+    var lastContainer = $('.js-olay-container').last()[0];
+    if (!lastContainer) return;
+    var olay = lastContainer.olay;
     var which = ev.which;
     var keys = olay.hideOnKeys || [];
     for (var i = 0, l = keys.length; i < l; ++i) {
