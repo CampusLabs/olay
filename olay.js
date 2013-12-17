@@ -106,7 +106,7 @@
       // desirable in a transition...
       this.$container[0].olay = this;
       this.$container.height();
-      this.$container.addClass('js-olay-show');
+      this.$container.addClass('js-olay-show').scrollTop(0);
 
       // Delegate events, ensuring no double-binding.
       delegate(this.$container, 'click', this._$containerClick);
