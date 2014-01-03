@@ -190,4 +190,4 @@
   for (var name in proto) Olay.prototype[name] = proto[name];
 
   return Olay;
-})();
+});
