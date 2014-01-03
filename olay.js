@@ -1,8 +1,13 @@
-(function () {
+(function (root, factory) {
+  if (typeof root.define === 'function' && root.define.amd) {
+    root.define('olay', ['jquery'], factory);
+  } else if (typeof exports !== 'undefined') {
+    module.exports = factory(require('jquery'));
+  } else {
+    root.Olay = factory(root.jQuery);
+  }
+})(this, function ($) {
   'use strict';
-
-  // Store a local reference to jQuery.
-  var $ = window.jQuery;
 
   // Selector for tabbable elements.
   var tabbable =
@@ -30,7 +35,7 @@
   // ```js
   // var olay = new Olay('Howdy!', {duration: 5000});
   // ```
-  var Olay = window.Olay = function (el, options) {
+  var Olay = function (el, options) {
 
     // Extend the instance with its options.
     for (var name in options) this[name] = options[name];
@@ -183,4 +188,6 @@
 
   // Extend `Olay.prototype`.
   for (var name in proto) Olay.prototype[name] = proto[name];
+
+  return Olay;
 })();
