@@ -157,8 +157,9 @@
       var $body = $('body');
       var $olays = $('.js-olay-container');
       var active = document.activeElement;
-      var useLast = $olays.length && active === $body[0];
-      this._$active = useLast ? $olays.last() : $(active);
+      var isBody = active === $body[0];
+      var useLast = $olays.length && isBody;
+      this._$active = useLast ? $olays.last() : $(isBody ? null : active);
       $(tabbable).each(function () {
         if ('olayTabindex' in this) return;
         var $self = $(this);
