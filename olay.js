@@ -174,7 +174,7 @@
     // Detach and optionally remove `$container` from the DOM. Used internally.
     _remove: function () {
       this.$container.detach();
-      this._$active.attr('tabindex', 0).focus().removeAttr('tabindex');
+      this._$active.focus();
       var $olays = $('.js-olay-container');
       ($olays.length ? $olays.last() : $('body').removeClass('js-olay-visible'))
         .find(tabbable).each(function () {
