@@ -1,0 +1,26 @@
+{
+  "name": "olay",
+  "version": "0.4.6",
+  "description": "Awesome, accessible overlays/pop-ups/modals, now with scrolling!",
+  "main": "olay.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orgsync/olay.git"
+  },
+  "keywords": [
+    "popup",
+    "overlay"
+  ],
+  "author": "CaseyWebDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orgsync/olay/issues"
+  },
+  "homepage": "https://github.com/orgsync/olay#readme"
+}
